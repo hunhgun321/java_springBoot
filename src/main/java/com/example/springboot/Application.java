@@ -8,8 +8,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ServerProperties;
 @SpringBootApplication
 public class Application {
+
+	@Autowired
+	private ServerProperties serverProperties;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
@@ -29,8 +34,10 @@ public class Application {
 			// 	System.out.println(beanName);
 			// }
 			System.out.println("");
+			String inetAddress;
 			
-			
+			System.out.println("The server address: "+(serverProperties.getAddress() == null? "localhost(127.0.0.1)":serverProperties.getAddress())+" && Running on port: "+serverProperties.getPort());
+
 			System.out.println("");
 		};
 	}

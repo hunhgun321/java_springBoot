@@ -5,7 +5,9 @@ starting the server (at root directory)
 -----------------------------------------------------------------------------------------------------------------------------------
 
 !!!!!NOTES BEFORE FURTHER INFORMATION!!!!
-remember to import the annotation before using it
+ remember to import the annotation before using it. And if u use some classes that are already defined in spring boot E.g. ServerProperties
+ u hv to import them first before using them. To find the location of those annotations and classes, docs.spring.io may be a good place
+ to search for.
 
 public class name must match the file name e.g. XXX.java -> public class XXX. Thus only one public class in the outter layer
  Otherwise, u can make nested class -> class in class. Creating an instance of that inner class 
@@ -56,8 +58,14 @@ For structuring the project, it is recommended to divide it into controllers(for
      Moreover, for each requestparam, u can set some options for them. E.g. 
     
 
- @SpringBootApplication
+@SpringBootApplication
     is meta-data and methods defined for ur application. And the file that contains this annotation will be the main 
     file for running the application.
 
+ServerProperties
+    is a class built in spring boot to serve for server information e.g. port number and server address. 
 
+@Autowired
+    is used to help u to instantiate an object from a pre-defined class. E.g. @Autowired private ClassA instance; u didnt call the 
+    new ClassA(bla bla bla....), but the Autowired has done it for u. It is useful in spring when u want to hv an instance which 
+    is from a pre-defined class in spring boot e.g. ServerProperties
