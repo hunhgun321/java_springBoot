@@ -1,0 +1,63 @@
+FOR GRADLE: 
+starting the server (at root directory)
+> ./gradlew bootRun
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+!!!!!NOTES BEFORE FURTHER INFORMATION!!!!
+remember to import the annotation before using it
+
+public class name must match the file name e.g. XXX.java -> public class XXX. Thus only one public class in the outter layer
+ Otherwise, u can make nested class -> class in class. Creating an instance of that inner class 
+ by ClassA.ClassInner XXX = new ClassA().new ClassInner()
+
+POJO will be used as the received body for the request body. Spring boot will do the parse from JSON to POJO for u. BUT!!!! pojo should
+ be defined in other packages. As spring boot structure is not obvious for managing packages, u can create a folder inside 
+ springboot folder for saving those POJO files. The folder may be named as "model" for structuring the project from the 
+ perspective of functionality( in this case, I just named it as pojo).
+
+POJO should be created with private attributes that have the same names as the incoming JSON request body keys. And create getters and 
+ setters for manupulating the variables.
+
+JSON response can be done by just returning a POJO. Jackson Serializer of the spring boot will do the conversion for us. BUT
+ remember that each private attributes NEED to have a Getter, at least. Otherwise, error.
+
+For structuring the project, it is recommended to divide it into controllers(for web apis), models(for POJO), services(for third parties)
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+/src/main/resources/static
+    is used for serving web static content, all the css, js, html etc. (also default folder search by spring) 
+    E.g. http://ur address/index.html will open the index.html inside ur static folder
+
+/src/main/resources/templates
+    is a place where you put all the thymeleaf templates. It is a default directory (by default spring will look 
+    inside for any templates).
+
+/src/main/resources/application.properties
+    is the file for setting the configuration of the spring boot server
+    E.g.  server.port=7777 can set the port of the application to 7777 (which default is 8080)
+    but we can also set the port to be random by setting the port to 0
+    if we want to check the runtime port of the server, we can look at the terminal which run ./gradlew bootRun. And find the line 
+    .......o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 7777 (http).......
+    Then, we know, in this case, the server is running on port 7777 (http protocol)
+
+@GetMapping("[the path E.g. '/' or '/helloPath']")
+    is dealing with RESTful apis GET. If u want to deal with POST requests on certain paths, for example, u can use @PostMapping. 
+    @DeleteMapping for delete requests and @PutMapping for put requests
+
+@RequestParam
+    is normally dealing with the query parameters E.g. "/nice_try?id=6&name=what the heck". We hv query params id and name for 
+    our path: nice_try. If we use @RequestParam String id, then we can catch the value of the param id and assign its value to a String 
+    and use it as its original name: id. OR we can rename it through '@RequestParam(value = "id") String renameId' OR '@RequestParam("id") String renameId'
+    , then we can use the id param as renameId in our following code. NOTE that we hv determined the param id will be catched as a 
+    String. On the other hand, if we determine that it should be an int, and param passing in is a string E.g. /nice_try?id=hi
+     , then there will be error. Moreover, We need no quotes for assigning string with space to our params. Just like name=what the heck.
+     Moreover, for each requestparam, u can set some options for them. E.g. 
+    
+
+ @SpringBootApplication
+    is meta-data and methods defined for ur application. And the file that contains this annotation will be the main 
+    file for running the application.
+
+
