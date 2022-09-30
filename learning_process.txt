@@ -44,6 +44,10 @@ For structuring the project, it is recommended to divide it into controllers(for
     .......o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 7777 (http).......
     Then, we know, in this case, the server is running on port 7777 (http protocol)
 
+@RestController
+    is an annotation that set up all the basic setting for you. If you have built a controller, u NEED to add this annotation in 
+    the controller class in ORDER for the spring boot to recognize ur class as a controller.
+
 @GetMapping("[the path E.g. '/' or '/helloPath']")
     is dealing with RESTful apis GET. If u want to deal with POST requests on certain paths, for example, u can use @PostMapping. 
     @DeleteMapping for delete requests and @PutMapping for put requests
@@ -65,7 +69,35 @@ For structuring the project, it is recommended to divide it into controllers(for
 ServerProperties
     is a class built in spring boot to serve for server information e.g. port number and server address. 
 
+    server.port=[port number] => define the port for the server
+
+    server.error.whitelabel.enabled=false => DEFAULT is true, which shows a whitelabel page when there is error. 
+    You can set false such that when there is error on loading the page for the client, 
+    the page will just show the error directly from the Tomcat or 
+
+    server.error.path=/error => server will call path which is /error to handle errors
+
 @Autowired
     is used to help u to instantiate an object from a pre-defined class. E.g. @Autowired private ClassA instance; u didnt call the 
     new ClassA(bla bla bla....), but the Autowired has done it for u. It is useful in spring when u want to hv an instance which 
-    is from a pre-defined class in spring boot e.g. ServerProperties
+    is from a pre-defined class in spring boot e.g. ServerProperties in Application.java 
+
+@CrossOrigin
+    is used to set the CORS configuration. U can set several settings such as origins, methods, allowedHeaders, exposedHeaders, 
+    allowCredentials, and maxAge. U can set it on the controller class(apply to all paths underneath) or on the path function(apply only 
+    for one path). If u set the same field but different
+    value of the CORS settings on controller class and path function respectively, the config on path function will override the 
+    controllers' setting. Otherwise, they will be combined. 
+
+DispatcherServlet
+    is Simply put, in the Front Controller design pattern, 
+    a single controller is responsible for directing incoming HttpRequests to all of an application's other controllers and handlers.
+    Spring's DispatcherServlet implements this pattern and is, therefore, responsible for correctly coordinating the HttpRequests to
+     their right handlers.
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+COMMON ERRORS AND SOLUTIONS:
+1. Circular view path [error]:
+    normally occurs when ur path E.g. /path1 and the name of ur return template page E.g. "path1.html" are the same. It is becuz

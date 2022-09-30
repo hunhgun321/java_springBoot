@@ -1,8 +1,9 @@
 package pojo;
-public class PutBody{
-    private String bodyPut;
 
-    public String getbodyPut(){
+public class PutBody {
+    private int bodyPut;
+
+    public int getbodyPut() {
         return bodyPut;
     }
 }
